@@ -1,0 +1,39 @@
+.Calculator {
+}
+.FarmOpenPositionInput .c-card {
+    background-color: #f4f4f4;
+    --tw-bg-opacity: 1;
+    border-radius: 1.5rem;
+
+}
+.InputPercent .c-input {
+    border-radius: 7px;
+}
+.InputPercent .c-input__prefix--d {
+    margin-left: .25rem;
+    width: 36px;
+}
+.InputPercent .c-input__prefix--m {
+    width: 28px;
+}
+.InputPercent .c-input__prefix {
+    margin-right: .5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgba(255,255,255,var(--tw-bg-opacity));
+    border-radius: 9999px;
+}
+.InputPercent .c-input__suffix {
+    margin-right: .5rem;
+}
+.AssetPriceLine {
+    justify-items: start;
+    font-size: 1rem;
+    --tw-text-opacity: 1;
+    color: rgba(156,163,175,var(--tw-text-opacity));
+}
+.AssetPriceLine .assetPriceImg {
+    margin-right: .5rem;
+    --tw-bg-opacity: 1;
+    background-color: rgba(255,255,255,var(--tw-bg-opacity));
+    border-radius: 9999px;
+}
