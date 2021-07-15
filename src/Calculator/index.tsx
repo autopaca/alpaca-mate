@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import poolMetas from "./poolMetas";
-import {Button, Checkbox, Image, Input, Select, Card, Spin, Row, Col} from 'antd';
+import {Button, Checkbox, Image, Input, Select, Card, Spin, Row, Col, Space} from 'antd';
 import "./index.css";
 
 const {Option} = Select;
@@ -35,19 +35,19 @@ const getPriceInputRow = (asset: string) => (
                 </Col>
             </Row>
             <Row>
-                <Col>
+                <Col span={24} className={"my-4 text-left"}>
                     <span className={"AssetPriceLine"}>
+                        <Space>
                         <Image
                             className={"mt-1 assetPriceImage"}
                             src={getCoinUrl(asset)}
                             height={"20px"}
                             preview={false}/>
-                        <span> </span>
                         <span>1 {asset}</span>
-                        <span> </span>
                         <span>=</span>
-                        <Input className={"inline"}/>
+                        <Input className={"w-auto"}/>
                         <span>BUSD</span>
+                        </Space>
                     </span>
                 </Col>
             </Row>
@@ -95,11 +95,20 @@ function Calculator() {
                                                 </Col>
                                             </Row>
                                             {assets.length === 2 &&
-                                                <>
-                                                    {getPriceInputRow(assets[0])}
-                                                    {getPriceInputRow(assets[1])}
-                                                </>
+                                            <>
+                                                {getPriceInputRow(assets[0])}
+                                                {getPriceInputRow(assets[1])}
+                                            </>
                                             }
+                                            <div className="ant-row mt-6 lg:mt-10 lg:mx-4 text-sm lg:text-xl font-bold"
+                                                 style={{rowGap: "0px"}}>
+                                                <div className="ant-col"><span>Leverage</span></div>
+                                            </div>
+                                            <Row className={"mt-4 ml-2 lg:mt-7 lg:ml-8 lg:mr-4"} style={{rowGap: "0px"}}>
+                                                <Col span={24}>
+
+                                                </Col>
+                                            </Row>
                                         </Card>
                                     </Col>
                                 </Row>

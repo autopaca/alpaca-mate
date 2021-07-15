@@ -1,6 +1,6 @@
 .App {
   text-align: center;
-  background: #ededf2;
+  background: #ededf2 !important;
   height: 100%;
   width: 100%;
   font-family: Poppins, serif;

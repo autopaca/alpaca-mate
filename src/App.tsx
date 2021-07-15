@@ -10,9 +10,9 @@ function App() {
 
     return (
         <div className="App transition-filter duration-300">
-            <Layout>
+            <Layout style={{background: "transparent"}}>
                 <Header style={{background: "transparent"}}>Header</Header>
-                <Layout>
+                <Layout style={{background: "transparent"}}>
                     <Sider style={{background: "transparent"}}>Sider</Sider>
                     <Content className={"w-full lg:m-auto max-w-screen-lg min-w-screen-lg"}>
                         <Calculator />
