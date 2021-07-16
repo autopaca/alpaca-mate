@@ -7,6 +7,23 @@
 .FarmChoosePosition .c-poolSelector>.ant-select-selector>.ant-select-selection-item {
     display: flex;
 }
+.FarmChoosePosition .c-image__twoStack {
+    display: grid;
+    justify-content: center;
+}
+.FarmChoosePosition .c-image__twoStack .ant-image:first-child {
+    grid-column: 5/span 5;
+    grid-row: 1;
+}
+.FarmChoosePosition .c-image__twoStack .ant-image:last-child {
+    grid-column: 2/span 5;
+    grid-row: 1;
+}
+.FarmChoosePosition .c-image__twoStack--right {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
+}
 .FarmOpenPositionInput .c-card {
     background-color: #f4f4f4;
     --tw-bg-opacity: 1;
@@ -46,8 +63,11 @@
     background-color: rgba(255,255,255,var(--tw-bg-opacity));
     border-radius: 9999px;
 }
-.SliderBarInput {
-
+.FarmOpenPositionInput .ant-slider-rail {
+    background-color: #e0e0e0;
+}
+.SliderBarInput .ant-slider-handle, .SliderBarInput .ant-slider-track {
+    background-color: #31c77f;
 }
 .FarmOpenPositionInput .c-assetSelector>.ant-select-selector {
     height: 3rem;

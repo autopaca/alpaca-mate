@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import poolMetas from "./poolMetas";
-import {Image, Input, Select, Card, Spin, Row, Col, Space, Slider} from 'antd';
+import {Image, Input, Select, Card, Spin, Row, Col, Space, Slider, Button} from 'antd';
 import "./index.css";
 
 const {Option} = Select;
@@ -80,10 +80,22 @@ function Calculator() {
                                 <span>Which pool would like to farm?</span>
                             </Col>
                             <Col>
-                                <Select className={"c-poolSelector mx-4 w-64"} onChange={choosePool}>
+                                <Select className={"c-poolSelector mx-4 w-64"} onChange={choosePool} dropdownClassName={"FarmChoosePosition"}>
                                     {poolMetas.map((meta, i) => (
                                         <Option value={meta.name} key={`farm-${meta.name}`}>
-                                            <Row align={"middle"}>
+                                            <Row justify={"start"} align={"middle"}>
+                                                <Col>
+                                                    <div className={"c-image__twoStack mr-2"}>
+                                                        <Image
+                                                            className={"h-6 w-6 rounded-full bg-white shadow-md"}
+                                                            src={getCoinUrl(meta.name.split("-")[0])}
+                                                            preview={false}/>
+                                                        <Image
+                                                            className={"h-6 w-6 rounded-full bg-white shadow-md"}
+                                                            src={getCoinUrl(meta.name.split("-")[1])}
+                                                            preview={false}/>
+                                                    </div>
+                                                </Col>
                                                 <Col>
                                                     {meta.name}
                                                 </Col>
@@ -119,8 +131,16 @@ function Calculator() {
                                                     <Row justify={"center"} className={"SliderBarInput"}>
                                                         <Col xs={18} lg={20}>
                                                             <Slider
-                                                                min={0}
-                                                                max={1}
+                                                                marks={{
+                                                                    1: "1.00x",
+                                                                    1.25: "1.25x",
+                                                                    1.5: "1.50x",
+                                                                    1.75: "1.75x",
+                                                                    2: "2.00x",
+                                                                }}
+                                                                defaultValue={2}
+                                                                min={1}
+                                                                max={2}
                                                                 // onChange={this.onChange}
                                                                 // value={typeof inputValue === 'number' ? inputValue : 0}
                                                                 step={0.01}
@@ -139,18 +159,25 @@ function Calculator() {
                                             </Row>
                                             <Row className={"mt-4 lg:mt-7 lg:mx-4"}>
                                                 <Col span={24}>
-                                                    <Select className={"c-assetSelector"}>
+                                                    <Select className={"c-assetSelector"} dropdownClassName={"FarmOpenPositionInput"}>
                                                         {assets.map((asset) => (
                                                             <Option value={asset} key={`borrow-${asset}`}>
                                                                 <Row align={"middle"}>
-                                                                    <Col style={{paddingLeft: "8px", paddingRight: "8px", flex: "0 0 auto"}}>
+                                                                    <Col style={{
+                                                                        paddingLeft: "8px",
+                                                                        paddingRight: "8px",
+                                                                        flex: "0 0 auto"
+                                                                    }}>
                                                                         <img
                                                                             className={"c-assetSelector__optionList__option__icon"}
                                                                             src={getCoinUrl(asset)}
-                                                                            style={{height: "2.25rem"}}
                                                                         />
                                                                     </Col>
-                                                                    <Col style={{paddingLeft: "8px", paddingRight: "8px", flex: "0 0 auto"}}>
+                                                                    <Col style={{
+                                                                        paddingLeft: "8px",
+                                                                        paddingRight: "8px",
+                                                                        flex: "0 0 auto"
+                                                                    }}>
                                                                         {asset}
                                                                     </Col>
                                                                 </Row>
