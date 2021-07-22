@@ -150,6 +150,11 @@
     "leverage": 2.5
   },
   {
+    "pool": "BUSD-ALPACA",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
     "pool": "ORBS-BUSD",
     "platform": "Pancake",
     "leverage": 2
@@ -218,6 +223,11 @@
     "pool": "ALPACA-BNB",
     "platform": "WaultSwap",
     "leverage": 2.5
+  },
+  {
+    "pool": "BNB-ALPACA",
+    "platform": "WaultSwap",
+    "leverage": 2
   },
   {
     "pool": "BUSD-BNB",
