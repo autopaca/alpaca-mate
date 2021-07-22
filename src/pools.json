@@ -135,6 +135,11 @@
     "leverage": 4
   },
   {
+    "pool": "BUSD-TUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
     "pool": "FORM-BUSD",
     "platform": "Pancake",
     "leverage": 2
