@@ -1,0 +1,18 @@
+.FarmOpenPositionDetail .in-asset-selector>.ant-select-selector {
+    border-radius: .5rem;
+}
+.FarmOpenPositionDetail .c-rewardsApr__value__icon {
+    display: inline-flex;
+    width: 3rem;
+    padding: .5rem;
+}
+.FarmOpenPositionDetail .c-apr-arrow {
+    position: relative;
+    bottom: 5px;
+}
+.FarmOpenPositionDetail .c-totalAprDescription {
+    font-size: .75rem;
+    --tw-text-opacity: 1;
+    color: rgba(156,163,175,var(--tw-text-opacity));
+    letter-spacing: .58px;
+}

@@ -1,0 +1,307 @@
+[
+  {
+    "pool": "SWINGBY-wBNB",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "BELT-wBNB",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "bMXX-wBNB",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "ITAM-wBNB",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "CAKE-wBNB",
+    "platform": "Pancake",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BTCB-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "ETH-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "DOT-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "UNI-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "LINK-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "XVS-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "ADA-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "ODDZ-wBNB",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "DODO-wBNB",
+    "platform": "Pancake",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BUSD-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "TRX-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "BTT-wBNB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "BNB-BUSD",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "BTCB-BUSD",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "CAKE-BUSD",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-BUSD",
+    "platform": "Pancake",
+    "leverage": 6
+  },
+  {
+    "pool": "VAI-BUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "USDC-BUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "DAI-BUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "UST-BUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "TUSD-BUSD",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "FORM-BUSD",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "ALPACA-BUSD",
+    "platform": "Pancake",
+    "leverage": 2.5
+  },
+  {
+    "pool": "ORBS-BUSD",
+    "platform": "Pancake",
+    "leverage": 2
+  },
+  {
+    "pool": "COMP-ETH",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "SUSHI-ETH",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "BUSD-USDT",
+    "platform": "Pancake",
+    "leverage": 6
+  },
+  {
+    "pool": "BNB-USDT",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "CAKE-USDT",
+    "platform": "Pancake",
+    "leverage": 2.5
+  },
+  {
+    "pool": "USDC-USDT",
+    "platform": "Pancake",
+    "leverage": 4
+  },
+  {
+    "pool": "BUSD-BTCB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "BNB-BTCB",
+    "platform": "Pancake",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-ALPACA",
+    "platform": "WaultSwap",
+    "leverage": 2
+  },
+  {
+    "pool": "BNB-ALPACA",
+    "platform": "WaultSwap",
+    "leverage": 2
+  },
+  {
+    "pool": "WEX-BNB",
+    "platform": "WaultSwap",
+    "leverage": 2.5
+  },
+  {
+    "pool": "WAULTx-BNB",
+    "platform": "WaultSwap",
+    "leverage": 2
+  },
+  {
+    "pool": "ALPACA-BNB",
+    "platform": "WaultSwap",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BUSD-BNB",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "BNB-BUSD",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "ETH-BUSD",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "BTCB-BUSD",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-BUSD",
+    "platform": "WaultSwap",
+    "leverage": 4
+  },
+  {
+    "pool": "WEX-USDT",
+    "platform": "WaultSwap",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BTCB-USDT",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "ETH-USDT",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "ALPACA-USDT",
+    "platform": "WaultSwap",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BUSD-USDT",
+    "platform": "WaultSwap",
+    "leverage": 4
+  },
+  {
+    "pool": "MATIC-USDT",
+    "platform": "WaultSwap",
+    "leverage": 2.5
+  },
+  {
+    "pool": "BTCB-ETH",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "BETH-ETH",
+    "platform": "WaultSwap",
+    "leverage": 4
+  },
+  {
+    "pool": "BUSD-ETH",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-ETH",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "ETH-BTCB",
+    "platform": "WaultSwap",
+    "leverage": 3
+  },
+  {
+    "pool": "USDT-BTCB",
+    "platform": "WaultSwap",
+    "leverage": 4
+  },
+  {
+    "pool": "BUSD-BTCB",
+    "platform": "WaultSwap",
+    "leverage": 3
+  }
+]

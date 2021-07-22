@@ -54,3 +54,16 @@
 button {
   font-size: calc(10px + 2vmin);
 }
+
+.NavigationBar {
+  color: #31c77f;
+  line-height: 48px;
+}
+.NavigationBar .c-appName--desktop {
+  font-size: 2rem;
+}
+.NavigationBar .c-appName {
+  font-style: normal;
+  font-weight: 700;
+  letter-spacing: .58px;
+}

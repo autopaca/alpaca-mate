@@ -1,0 +1,24 @@
+.ChooseFarmPosition .c-poolSelector>.ant-select-selector {
+    height: 3rem;
+    border-radius: .5rem;
+}
+.ChooseFarmPosition .c-poolSelector>.ant-select-selector>.ant-select-selection-item {
+    display: flex;
+}
+.ChooseFarmPosition .c-image__twoStack {
+    display: grid;
+    justify-content: center;
+}
+.ChooseFarmPosition .c-image__twoStack .ant-image:first-child {
+    grid-column: 5/span 5;
+    grid-row: 1;
+}
+.ChooseFarmPosition .c-image__twoStack .ant-image:last-child {
+    grid-column: 2/span 5;
+    grid-row: 1;
+}
+.ChooseFarmPosition .c-image__twoStack--right {
+    grid-column-start: 2;
+    grid-column-end: 4;
+    grid-row: 1;
+}
