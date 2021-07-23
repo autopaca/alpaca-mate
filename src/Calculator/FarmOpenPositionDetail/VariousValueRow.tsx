@@ -3,12 +3,13 @@ import React, {useState} from "react";
 import {useRecoilValue} from "recoil";
 import {assetsState, assetsValueState} from "../../Store";
 import {AssetValues, BUSD} from "../type.d";
+import {formatValue} from "../utils";
 
 const {Option} = Select;
 
 const VariousValueRow = (props: {
     title: React.ReactNode,
-    assetsValues: AssetValues,
+    assetsValues?: AssetValues,
     defaultIndex?: number,
 }) => {
     const assets = useRecoilValue(assetsState);
@@ -19,7 +20,7 @@ const VariousValueRow = (props: {
         }
         return c;
     }
-    const [chosenIndex, setChosenIndex] = useState<number>(props.defaultIndex ?? coins().length - 1);
+    const [chosenIndex, setChosenIndex] = useState<number>(coins().length - 1);
     const options = () => {
         return coins().map((coin, i) => (
             <Option key={`in-${coin}`} value={i}>
@@ -28,7 +29,10 @@ const VariousValueRow = (props: {
         );
     }
     const renderValue = () => {
-        return `${props.assetsValues[chosenIndex].toFixed(2)} ${coins()[chosenIndex]}`;
+        if (!props.assetsValues) {
+            return `0.00 ${coins()[chosenIndex]}`;
+        }
+        return `${formatValue(props.assetsValues[chosenIndex])} ${coins()[chosenIndex]}`;
     }
     return (
         <Row wrap={false} className={"my-4"} align={"middle"}>

@@ -34,9 +34,10 @@ export type PositionStatusAfterClose = {
 }
 
 export type Estimation = {
-    farmingDays: number,
+    farmingDays?: number,
     prices: number[]; // length is always 2, 0 is asset1, 1 is asset2
 }
+
 export type Borrowed = {
     borrowedIndex: number,
     borrowedAssetLiteral: string;
@@ -65,12 +66,16 @@ export type FinalApr = {
     totalApy: number,
     leveragedTotalApy: number
 }
+export type PoolMetaState = {
+    poolMeta: PoolMeta,
+    poolIndex: number,
+}
 export type GainOrLoss = {
     value: number,
     percent: number
 }
 export type GainOrLossWithApy = {
-    farmGain: number
+    farmGain?: number
 } & GainOrLoss
 
 export const BUSD = "BUSD";

@@ -24,10 +24,10 @@ const FarmOpenPositionInput = () => {
         return ary;
     }
     const setBorrowed = (b: number) => {
-        if (b != farmInput.borrowedIndex) {
+        if (b != farmInput!.borrowedIndex) {
             const newPoolName = `${assets![1]}-${assets![0]}`
-            const newPool = poolMetas.find(p => p.pool === newPoolName)
-            newPool && setPool(newPool)
+            const newPoolIndex = poolMetas.findIndex(p => p.pool === newPoolName)
+            newPoolIndex >= 0 && setPool({poolIndex: newPoolIndex, poolMeta: poolMetas[newPoolIndex]})
         }
     }
     return (
@@ -39,13 +39,13 @@ const FarmOpenPositionInput = () => {
                             <Card className={"c-card"}>
                                 <AmountAndPriceInput assets={assets!}/>
                                 <FarmLeverage
-                                    leverage={farmInput.leverage}
-                                    setLeverage={l => setFarmInput(old => ({...old, leverage: l}))}
-                                    maxLeverage={poolInfo!.leverage!}
+                                    leverage={farmInput!.leverage}
+                                    setLeverage={l => setFarmInput(old => ({...old!, leverage: l}))}
+                                    maxLeverage={poolInfo?.leverage ?? 1}
                                 />
                                 <AssetToBorrow
                                     assets={canBeBorrowed()!}
-                                    borrowedIndex={farmInput.borrowedIndex}
+                                    borrowedIndex={farmInput!.borrowedIndex}
                                     setBorrowed={setBorrowed}
                                 />
                                 <Divider />

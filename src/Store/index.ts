@@ -6,14 +6,14 @@ import {
     Estimation,
     ExtendedApr,
     FarmInput,
-    FinalApr, GainOrLoss, GainOrLossWithApy, PoolInfo,
+    FinalApr, GainOrLoss, GainOrLossWithApy, PoolInfo, PoolMetaState,
     PositionStatus, PositionStatusAfterClose,
     RelativeInfo
 } from "../Calculator/type.d";
 import {aprToApy} from "../Calculator/utils";
-import {PoolMeta, possibleBorrowAssets} from "../poolMetas";
+import {possibleBorrowAssets} from "../poolMetas";
 
-export const poolState = atom<PoolMeta | undefined>({
+export const poolState = atom<PoolMetaState | undefined>({
     key: 'pool', // unique ID (with respect to other atoms/selectors)
     default: undefined, // default value (aka initial value)
 });
@@ -24,7 +24,7 @@ export const poolInfoState = selector<PoolInfo | undefined>({
         if (!pool) {
             return undefined
         }
-        const leverage = pool?.leverage;
+        const leverage = pool.poolMeta.leverage;
         let liquidationThreshold = 0;
         if (leverage) {
             if (leverage <= 2) {
@@ -40,18 +40,27 @@ export const poolInfoState = selector<PoolInfo | undefined>({
             }
         }
         return {
-            ...pool,
+            ...pool.poolMeta,
             liquidationThreshold
         }
     }
 })
 
-const farmInputSelector = selector<FarmInput>({
+export const assetsState = selector<string[] | undefined>({
+    key: 'poolAssets',
+    get: ({get}) => {
+        const poolInfo = get(poolInfoState);
+        return poolInfo?.pool.split('-');
+    }
+})
+
+const farmInputSelector = selector<FarmInput | undefined>({
     key: "farmInputSelector",
     get: ({get}) => {
         const pool = get(poolInfoState);
         const assets = get(assetsState);
-        const leverage = pool ? pool.leverage : 1;
+        if (!pool || !assets) return undefined
+        const leverage = pool.leverage;
         let borrowedIndex = 0;
         if (assets) {
             const possibleAssets = possibleBorrowAssets();
@@ -67,15 +76,14 @@ const farmInputSelector = selector<FarmInput>({
     }
 })
 
-export const farmInputState = atom<FarmInput>({
+export const farmInputState = atom<FarmInput | undefined>({
     key: 'farmInput',
     default: farmInputSelector
 })
 export const estimationState = atom<Estimation>({
     key: "estimation",
     default: {
-        farmingDays: 0,
-        prices: [0, 0],
+        prices: []
     }
 })
 export const baseAprState = atom<BaseApr>({
@@ -92,12 +100,14 @@ export const extendedAprState = atom<ExtendedApr>({
         interestApr: 0,
     }
 })
-export const finalAprState = selector<FinalApr>({
+export const finalAprState = selector<FinalApr|undefined>({
     key: "finalApr",
     get: ({get}) => {
+        const farmInput = get(farmInputState);
+        if (!farmInput) return undefined;
         const {yieldFarmApr, tradingFeeApr} = get(baseAprState);
         const {alpacaApr, interestApr} = get(extendedAprState);
-        const leverage = get(farmInputState).leverage;
+        const leverage = farmInput.leverage;
         // calculated apr
         const leveragedYFApr = leverage * yieldFarmApr;
         const leveragedTFApr = leverage * tradingFeeApr;
@@ -120,13 +130,6 @@ export const finalAprState = selector<FinalApr>({
     }
 })
 
-export const assetsState = selector<string[] | undefined>({
-    key: 'poolAssets',
-    get: ({get}) => {
-        const pool = get(poolInfoState);
-        return pool?.pool.split('-');
-    }
-})
 
 function makeRelativeSymbol(a1: string, a2: string) {
     return `${a1}/${a2}`
@@ -145,21 +148,23 @@ function calculateRelative(price1: number, price2: number, assets: string[]) {
     ]
 }
 
-export const relativeInfoAtOpenState = selector<RelativeInfo>({
+export const relativeInfoAtOpenState = selector<RelativeInfo|undefined>({
     key: "relativeInfoAtOpen",
     get: ({get}) => {
         const farmInput = get(farmInputState);
+        if (!farmInput) return undefined;
         const assets = get(assetsState)!;
         const price1 = farmInput.assetDetails[0].price || 0;
         const price2 = farmInput.assetDetails[1].price || 0;
         return calculateRelative(price1, price2, assets);
     }
 })
-export const relativeInfoAtCloseState = selector<RelativeInfo>({
+export const relativeInfoAtCloseState = selector<RelativeInfo|undefined>({
     key: "relativeInfoAtClose",
     get: ({get}) => {
         const estimation = get(estimationState);
-        const assets = get(assetsState)!;
+        const assets = get(assetsState);
+        if (!assets) return undefined;
         const price1 = estimation.prices[0] || 0;
         const price2 = estimation.prices[1] || 0;
         return calculateRelative(price1, price2, assets);
@@ -172,10 +177,11 @@ function calculateValues(busdValue: number, price1?: number, price2?: number) {
     return [inAsset1, inAsset2, busdValue];
 }
 
-export const assetsValueState = selector<AssetValues>({
+export const assetsValueState = selector<AssetValues|undefined>({
     key: 'assetsValue',
     get: ({get}) => {
         const farmInput = get(farmInputState);
+        if (!farmInput) return undefined;
         const amount1 = farmInput.assetDetails[0].amount ?? "0";
         const price1 = farmInput.assetDetails[0].price ?? 0;
         const amount2 = farmInput.assetDetails[1].amount ?? "0";
@@ -185,12 +191,13 @@ export const assetsValueState = selector<AssetValues>({
         return calculateValues(inBusd, price1, price2);
     }
 })
-export const borrowedState = selector<Borrowed>({
+export const borrowedState = selector<Borrowed|undefined>({
     key: "borrowed",
     get: ({get}) => {
         const farmInput = get(farmInputState);
-        const assets = get(assetsState);
-        const assetsValue = get(assetsValueState);
+        if (!farmInput) return undefined;
+        const assets = get(assetsState)!;
+        const assetsValue = get(assetsValueState)!;
         const borrowedAmount = ((farmInput.leverage! - 1) * assetsValue[farmInput.borrowedIndex]).toString()
         const borrowedPrice = farmInput.assetDetails[farmInput.borrowedIndex].price;
         const leverage = farmInput.leverage ?? 1;
@@ -211,15 +218,16 @@ export const borrowedState = selector<Borrowed>({
         }
     }
 })
-export const positionAtOpenState = selector<PositionStatus>({
+export const positionAtOpenState = selector<PositionStatus | undefined>({
     key: "positionAtOpen",
     get: ({get}) => {
         const farmInput = get(farmInputState);
+        if (!farmInput) return undefined;
         const price1 = farmInput.assetDetails[0].price || 0;
         const price2 = farmInput.assetDetails[1].price || 0;
 
-        const borrowed = get(borrowedState);
-        const assetsValue = get(assetsValueState);
+        const borrowed = get(borrowedState)!;
+        const assetsValue = get(assetsValueState)!;
         const borrowedPrice = borrowed.price || 0;
         const borrowedAmount = borrowed.borrowedAmount || "0";
         const totalInBusd = parseFloat(borrowedAmount) * borrowedPrice + assetsValue[2];
@@ -235,10 +243,11 @@ export const positionAtOpenState = selector<PositionStatus>({
         };
     }
 })
-export const positionAtCloseState = selector<PositionStatus>({
+export const positionAtCloseState = selector<PositionStatus|undefined>({
     key: "positionAtClose",
     get: ({get}) => {
         const positionAtOpen = get(positionAtOpenState);
+        if (!positionAtOpen) return undefined;
         const estimation = get(estimationState);
         const amount1 = positionAtOpen.positionDetails[0].amount ?? "0";
         const amount2 = positionAtOpen.positionDetails[1].amount ?? "0";
@@ -260,20 +269,21 @@ export const positionAtCloseState = selector<PositionStatus>({
     }
 })
 
-export const borrowedAtCloseState = selector<Borrowed>({
+export const borrowedAtCloseState = selector<Borrowed | undefined>({
     key: "borrowedAtClose",
     get: ({get}) => {
+        const poolInfo = get(poolInfoState);
         const borrowedAtOpen = get(borrowedState);
         const estimation = get(estimationState);
         const positionAtClose = get(positionAtCloseState);
-        const poolInfo = get(poolInfoState);
+        if (!poolInfo || !borrowedAtOpen || !positionAtClose) return undefined;
         const borrowedIndex = borrowedAtOpen.borrowedIndex;
         const price = estimation.prices[borrowedIndex];
         const borrowedAmount = borrowedAtOpen.borrowedAmount ?? "0";
         const valueInBusd = parseFloat(borrowedAmount) * price
         const borrowedValues = calculateValues(valueInBusd, estimation.prices[0], estimation.prices[1]);
         const debtRatio = valueInBusd / positionAtClose.positionValues[2]
-        const liquidated = debtRatio >= poolInfo!.liquidationThreshold;
+        const liquidated = debtRatio >= poolInfo.liquidationThreshold;
         return {
             borrowedIndex,
             borrowedAssetLiteral: borrowedAtOpen.borrowedAssetLiteral,
@@ -287,11 +297,12 @@ export const borrowedAtCloseState = selector<Borrowed>({
     }
 })
 
-export const positionAfterCloseState = selector<PositionStatusAfterClose>({
+export const positionAfterCloseState = selector<PositionStatusAfterClose | undefined>({
     key: "positionAfterClose",
     get: ({get}) => {
-        const positionAtClose = get(positionAtCloseState);
         const borrowedAtClose = get(borrowedAtCloseState);
+        const positionAtClose = get(positionAtCloseState)!;
+        if (!borrowedAtClose || !positionAtClose) return undefined;
         const estimation = get(estimationState);
         let busdValue = positionAtClose.positionValues[2] - borrowedAtClose.borrowedValues[2];
         if (borrowedAtClose.liquidated) {
@@ -345,32 +356,36 @@ export const positionAfterCloseState = selector<PositionStatusAfterClose>({
     }
 })
 
-export const gainOrLossState = selector<GainOrLoss>({
+export const gainOrLossState = selector<GainOrLoss | undefined>({
     key: "gainOrLoss",
     get: ({get}) => {
         const positionAfterClose = get(positionAfterCloseState);
         const assetsValueAtOpen = get(assetsValueState);
+        if (!positionAfterClose || !assetsValueAtOpen) return undefined;
         const value = positionAfterClose.positionValues[2] - assetsValueAtOpen[2];
         const percent = value / assetsValueAtOpen[2]
+        console.log("asset at open", assetsValueAtOpen[2])
         return {
             value,
             percent,
         }
     }
 })
-export const gainOrLossWithApyState = selector<GainOrLossWithApy>({
+export const gainOrLossWithApyState = selector<GainOrLossWithApy|undefined>({
     key: "gainOrLossWithApy",
     get: ({get}) => {
         const gainOrLoss = get(gainOrLossState);
         const positionAtOpen = get(positionAtOpenState);
         const positionAtClose = get(positionAtCloseState);
         const estimation = get(estimationState);
-        const finalApr = get(finalAprState);
+        if (!gainOrLoss || !positionAtOpen || !positionAtClose || !estimation.farmingDays) return undefined;
+        const assetsValueAtOpen = get(assetsValueState)!;
+        const finalApr = get(finalAprState)!;
         const averageValue = (positionAtOpen.positionValues[2] + positionAtClose.positionValues[2]) / 2
         const farmGain = (Math.pow(finalApr.dailyApr / 100 + 1, estimation.farmingDays) - 1) * averageValue;
         let {value} = gainOrLoss
         value += farmGain
-        const percent = value / positionAtOpen.positionValues[2]
+        const percent = value / assetsValueAtOpen[2]
         return {
             farmGain,
             value,

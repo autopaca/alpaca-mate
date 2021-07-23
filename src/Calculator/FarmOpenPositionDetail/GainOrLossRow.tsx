@@ -1,11 +1,12 @@
 import React, {useState} from 'react';
 import {Col, Row, Select} from "antd";
 import {GainOrLoss} from "../type";
+import {formatValue, ratioToPercent} from "../utils";
 const {Option} = Select;
 
 function GainOrLossRow(props: {
     title: string,
-    gainOrLoss: GainOrLoss
+    gainOrLoss?: GainOrLoss
 }) {
     const [chosenIndex, setChosenIndex] = useState<number>(0);
     const {gainOrLoss} = props;
@@ -18,9 +19,9 @@ function GainOrLossRow(props: {
     }
     const renderValue = () => {
         if (chosenIndex === 0) {
-            return `$${gainOrLoss.value.toFixed(2)}`;
+            return `$${formatValue(gainOrLoss?.value)}`;
         }
-        return `${(gainOrLoss.percent * 100).toFixed(2)}%`;
+        return ratioToPercent(gainOrLoss?.percent);
     }
     return (
         <Row wrap={false} className={"my-4"} align={"middle"}>
@@ -36,7 +37,7 @@ function GainOrLossRow(props: {
                 </span>
             </Col>
             <Col style={{flex: "0 0 auto"}}>
-                <span className={gainOrLoss.value < 0 ? "text-red-500" : ""}>
+                <span className={gainOrLoss && gainOrLoss.value < 0 ? "text-red-500" : ""}>
                     {renderValue()}
                 </span>
             </Col>

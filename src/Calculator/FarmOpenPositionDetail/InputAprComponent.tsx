@@ -20,7 +20,7 @@ const InputAprComponent = (props: {
                 onChange={props.onChange}
             />
             <ArrowRightOutlined className={"c-apr-arrow"}/>
-            <span>{props.leveragedValue}%</span>
+            <span>{props.leveragedValue.toFixed(2)}%</span>
         </Space>
     );
 }

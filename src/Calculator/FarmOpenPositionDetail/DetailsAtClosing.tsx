@@ -20,12 +20,13 @@ import RelativePriceRow from "./RelativePriceRow";
 import ReturnValueRow from "./ReturnValueRow";
 import GainOrLossRow from "./GainOrLossRow";
 import InfoTooltip from "./InfoTooltip";
+import {ratioToPercent, renderAssets} from "../utils";
 
 function DetailsAtClosing() {
     const assets = useRecoilValue(assetsState);
     const borrowedAtClose = useRecoilValue(borrowedAtCloseState);
     const poolInfo = useRecoilValue(poolInfoState);
-    const relativeAtClose = useRecoilValue(relativeInfoAtCloseState);
+    const relativeAtClose = useRecoilValue(relativeInfoAtCloseState)!;
     const positionAtClose = useRecoilValue(positionAtCloseState);
     const positionAfterClose = useRecoilValue(positionAfterCloseState);
     const gainOrLoss = useRecoilValue(gainOrLossState);
@@ -41,29 +42,29 @@ function DetailsAtClosing() {
             <DetailsRow
                 left={<><span className="block lg:inline-block mr-1">Total Assets in</span>
                     <span className="block lg:inline-block">Position Value</span></>}
-                right={`${positionAtClose.positionDetails[0].amount ?? "0.00"} ${assets![0]} + ${positionAtClose.positionDetails[1].amount ?? "0.00"} ${assets![1]}`}
+                right={renderAssets(assets!, positionAtClose?.positionDetails)}
             />
-            <VariousValueRow title={"Position Value"} assetsValues={positionAtClose.positionValues}/>
+            <VariousValueRow title={"Position Value"} assetsValues={positionAtClose?.positionValues}/>
             <VariousValueRow title={<>
                 <span className="block lg:inline-block mr-1">Asset Borrowed</span>
                 <span className="block lg:inline-block text-xs lg:text-lg">(Debt Value)</span></>}
-                             assetsValues={borrowedAtClose.borrowedValues}
-                             defaultIndex={borrowedAtClose.borrowedIndex}
+                             assetsValues={borrowedAtClose?.borrowedValues}
+                             defaultIndex={borrowedAtClose?.borrowedIndex}
             />
             <DetailsRow
                 left={"Debt Ratio"}
-                right={`${(borrowedAtClose.debtRatio * 100).toFixed(2)}%`}
+                right={ratioToPercent(borrowedAtClose?.debtRatio)}
             />
             <DetailsRow
                 left={"Liquidation Threshold"}
-                right={`${(poolInfo!.liquidationThreshold * 100).toFixed(2)}%`}
+                right={ratioToPercent(poolInfo?.liquidationThreshold)}
             />
             <DetailsRow
                 left={"Safety Buffer"}
-                right={`${((poolInfo!.liquidationThreshold - borrowedAtClose.debtRatio) * 100).toFixed(2)}%`}
+                right={ratioToPercent(poolInfo && borrowedAtClose && (poolInfo.liquidationThreshold - borrowedAtClose.debtRatio))}
             />
             <ReturnValueRow />
-            <VariousValueRow title={"Equity Value"} assetsValues={positionAfterClose.positionValues}/>
+            <VariousValueRow title={"Equity Value"} assetsValues={positionAfterClose?.positionValues}/>
             <GainOrLossRow  title={"Profit/Loss"} gainOrLoss={gainOrLoss}/>
         </>
     );

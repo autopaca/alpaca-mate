@@ -7,11 +7,11 @@ const {Option} = Select;
 
 function ReturnValueRow() {
     const [chosenIndex, setChosenIndex] = useState<number>(0);
-    const {borrowedAssetLiteral} = useRecoilValue(borrowedState);
-    const {positionDetails} = useRecoilValue(positionAfterCloseState);
+    const borrowed = useRecoilValue(borrowedState);
+    const positionAfterClose = useRecoilValue(positionAfterCloseState);
     const assets = useRecoilValue(assetsState);
     const options = () => {
-        const ops = ["Minimize Trading", `Convert to ${borrowedAssetLiteral}`]
+        const ops = ["Minimize Trading", `Convert to ${borrowed?.borrowedAssetLiteral ?? "..."}`]
         return ops.map((op, i) => (
             <Option key={`return-${op}`} value={i}>
                 {op}
@@ -21,11 +21,11 @@ function ReturnValueRow() {
     const renderValue = () => {
         let details;
         if (chosenIndex === 0) {
-            details = positionDetails.minimizeTrading;
+            details = positionAfterClose?.positionDetails.minimizeTrading;
         } else {
-            details = positionDetails.convertToBase;
+            details = positionAfterClose?.positionDetails.convertToBase;
         }
-        return renderAssets(details, assets!)
+        return renderAssets(assets!, details)
     }
 
     return (

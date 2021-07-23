@@ -12,7 +12,7 @@ function WithApy() {
             <DetailsTitle  content={"With APY"}/>
             <DetailsRow
                 left={"Yield Farm Earnings"}
-                right={`$${gainOrLossWithApy.farmGain.toFixed(2)}`}
+                right={`$${gainOrLossWithApy?.farmGain?.toFixed(2) ?? "0.00"}`}
             />
             <GainOrLossRow  title={"Total Profit/Loss"} gainOrLoss={gainOrLossWithApy}/>
         </>

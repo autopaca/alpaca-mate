@@ -3,7 +3,6 @@ import DetailsRow from "./DetailsRow";
 import InputAprComponent from "./InputAprComponent";
 import {Col, InputNumber, Row, Tooltip} from "antd";
 import AprComponent from "./AprComponent";
-import {ExclamationCircleOutlined} from "@ant-design/icons";
 import {useRecoilState, useRecoilValue} from "recoil";
 import {baseAprState, extendedAprState, finalAprState} from "../../Store";
 import InfoTooltip from "./InfoTooltip";
@@ -19,7 +18,7 @@ function AprDetails() {
                 right={<InputAprComponent
                     baseValue={baseApr.yieldFarmApr}
                     onChange={yieldFarmApr => setBaseApr(old => ({...old, yieldFarmApr}))}
-                    leveragedValue={finalApr.leveragedYFApr}
+                    leveragedValue={finalApr!.leveragedYFApr}
                 />}
             />
             <DetailsRow
@@ -28,7 +27,7 @@ function AprDetails() {
                 right={<InputAprComponent
                     baseValue={baseApr.tradingFeeApr}
                     onChange={tradingFeeApr => setBaseApr(old => ({...old, tradingFeeApr}))}
-                    leveragedValue={finalApr.leveragedTFApr}
+                    leveragedValue={finalApr!.leveragedTFApr}
                 />}
             />
             <DetailsRow
@@ -70,8 +69,8 @@ function AprDetails() {
             <DetailsRow
                 left={"Total APR"}
                 right={<AprComponent
-                    baseValue={finalApr.totalApr}
-                    leveragedValue={finalApr.leveragedTotalApr}
+                    baseValue={finalApr!.totalApr}
+                    leveragedValue={finalApr!.leveragedTotalApr}
                 />}
             />
             <Row wrap={false} className={"c-totalAprDescription -mt-6"} >
@@ -90,8 +89,8 @@ function AprDetails() {
                     />
                 </span>}
                 right={<AprComponent
-                    baseValue={finalApr.totalApy}
-                    leveragedValue={finalApr.leveragedTotalApy}
+                    baseValue={finalApr!.totalApy}
+                    leveragedValue={finalApr!.leveragedTotalApy}
                 />}
             />
         </>
