@@ -35,6 +35,7 @@ function FarmEstimation() {
             {
                 [0, 1].map(index => (
                     <PriceInput
+                        key={`estimation-${index}`}
                         asset={assets![index]}
                         price={estimation.prices[index]}
                         onPriceChange={v => onPriceChange(index, v)}

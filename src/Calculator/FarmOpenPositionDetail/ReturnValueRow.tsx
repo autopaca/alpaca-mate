@@ -13,7 +13,7 @@ function ReturnValueRow() {
     const options = () => {
         const ops = ["Minimize Trading", `Convert to ${borrowed?.borrowedAssetLiteral ?? "..."}`]
         return ops.map((op, i) => (
-            <Option key={`return-${op}`} value={i}>
+            <Option key={`return-${op}-${i}`} value={i}>
                 {op}
             </Option>)
         );

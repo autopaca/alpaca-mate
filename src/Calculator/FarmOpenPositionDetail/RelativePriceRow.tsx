@@ -12,7 +12,7 @@ function RelativePriceRow(props: {
     const [chosenIndex, setChosenIndex] = useState<number>(0);
     const options = () => {
         return props.relativeInfo.map((info, i) => (
-            <Option key={`relative-${info.symbol}`} value={i}>
+            <Option key={`relative-${info.symbol}-${i}`} value={i}>
                 {info.symbol}
             </Option>)
         );

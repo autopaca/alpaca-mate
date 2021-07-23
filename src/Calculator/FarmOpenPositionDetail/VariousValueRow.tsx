@@ -23,7 +23,7 @@ const VariousValueRow = (props: {
     const [chosenIndex, setChosenIndex] = useState<number>(coins().length - 1);
     const options = () => {
         return coins().map((coin, i) => (
-            <Option key={`in-${coin}`} value={i}>
+            <Option key={`in-${coin}-${i}`} value={i}>
                 in {coin.toUpperCase()}
             </Option>)
         );

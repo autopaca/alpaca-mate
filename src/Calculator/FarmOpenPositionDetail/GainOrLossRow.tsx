@@ -12,7 +12,7 @@ function GainOrLossRow(props: {
     const {gainOrLoss} = props;
     const options = () => {
         return ["Value", "Percent"].map((v, i) => (
-            <Option key={`gol-${v}`} value={i}>
+            <Option key={`gol-${v}-${i}`} value={i}>
                 {v}
             </Option>)
         );

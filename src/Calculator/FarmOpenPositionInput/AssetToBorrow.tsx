@@ -22,7 +22,7 @@ const AssetToBorrow = (props: {
                         onChange={props.setBorrowed}
                     >
                         {props.assets.map((asset, index) => (
-                            <Option value={index} key={`borrow-${asset}`}>
+                            <Option value={index} key={`borrow-${asset}-${index}`}>
                                 <Row align={"middle"}>
                                     <Col style={{paddingLeft: "8px", paddingRight: "8px", flex: "0 0 auto"}}>
                                         <img
