@@ -30,7 +30,7 @@ const VariousValueRow = (props: {
     }
     const renderValue = () => {
         if (!props.assetsValues) {
-            return `0.00 ${coins()[chosenIndex]}`;
+            return `0.00 BUSD`;
         }
         return `${formatValue(props.assetsValues[chosenIndex])} ${coins()[chosenIndex]}`;
     }
