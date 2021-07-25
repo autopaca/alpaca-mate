@@ -37,8 +37,8 @@ function DetailsAtClosing() {
                     <InfoTooltip
                         title="Without considering Yield Farm APY"
                     />
-                </span>} />
-            <RelativePriceRow title={"Relative Price"} relativeInfo={relativeAtClose} />
+                </span>}/>
+            <RelativePriceRow title={"Relative Price"} relativeInfo={relativeAtClose}/>
             <DetailsRow
                 left={<><span className="block lg:inline-block mr-1">Total Assets in</span>
                     <span className="block lg:inline-block">Position Value</span></>}
@@ -63,11 +63,11 @@ function DetailsAtClosing() {
                 left={"Safety Buffer"}
                 right={ratioToPercent(poolInfo && borrowedAtClose && (poolInfo.liquidationThreshold - borrowedAtClose.debtRatio))}
             />
-            <ReturnValueRow />
+            <ReturnValueRow/>
             <VariousValueRow title={"Equity Value"} assetsValues={positionAfterClose?.positionValues}/>
-            <GainOrLossRow  title={"Profit/Loss"} gainOrLoss={gainOrLoss}/>
+            <GainOrLossRow title={"Profit/Loss"} gainOrLoss={gainOrLoss}/>
         </>
-    );
+    )
 }
 
 export default DetailsAtClosing;
