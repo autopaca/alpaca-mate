@@ -4,6 +4,7 @@ import DetailsRow from "./DetailsRow";
 import {useRecoilValue} from "recoil";
 import {gainOrLossWithApyState} from "../../Store";
 import GainOrLossRow from "./GainOrLossRow";
+import {formatValue} from "../utils";
 
 function WithApy() {
     const gainOrLossWithApy = useRecoilValue(gainOrLossWithApyState);
@@ -12,7 +13,7 @@ function WithApy() {
             <DetailsTitle  content={"With APY"}/>
             <DetailsRow
                 left={"Yield Farm Earnings"}
-                right={`$${gainOrLossWithApy?.farmGain?.toFixed(2) ?? "0.00"}`}
+                right={`$${formatValue(gainOrLossWithApy?.farmGain)}`}
             />
             <GainOrLossRow  title={"Total Profit/Loss"} gainOrLoss={gainOrLossWithApy}/>
         </>
