@@ -14,7 +14,7 @@ const InputAprComponent = (props: {
                 value={props.baseValue}
                 defaultValue={0}
                 min={0}
-                max={100}
+                max={10000}
                 formatter={value => `${value}%`}
                 parser={value => parseFloat(value!.replace('%', ''))}
                 onChange={props.onChange}

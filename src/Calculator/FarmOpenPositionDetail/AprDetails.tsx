@@ -43,7 +43,7 @@ function AprDetails() {
                         value={extendedApr.alpacaApr}
                         defaultValue={0}
                         min={0}
-                        max={100}
+                        max={10000}
                         formatter={value => `${value}%`}
                         parser={value => parseFloat(value!.replace('%', ''))}
                         onChange={alpacaApr => setExtendedApr(old => ({...old, alpacaApr}))}
@@ -58,7 +58,7 @@ function AprDetails() {
                         value={extendedApr.interestApr}
                         defaultValue={0}
                         min={0}
-                        max={100}
+                        max={10000}
                         formatter={value => `-${value}%`}
                         parser={value => parseFloat(value!.replace('%', '').replace('-', ''))}
                         onChange={interestApr => setExtendedApr(old => ({...old, interestApr}))}
