@@ -69,7 +69,7 @@ const farmInputSelector = selector<FarmInput | undefined>({
             }
         }
         return {
-            borrowedIndex,
+            // borrowedIndex,
             leverage,
             assetDetails: [{}, {}]
         }
@@ -198,8 +198,8 @@ export const borrowedState = selector<Borrowed|undefined>({
         if (!farmInput) return undefined;
         const assets = get(assetsState)!;
         const assetsValue = get(assetsValueState)!;
-        const borrowedAmount = ((farmInput.leverage! - 1) * assetsValue[farmInput.borrowedIndex]).toString()
-        const borrowedPrice = farmInput.assetDetails[farmInput.borrowedIndex].price;
+        const borrowedAmount = ((farmInput.leverage! - 1) * assetsValue[1]).toString()
+        const borrowedPrice = farmInput.assetDetails[1].price;
         const leverage = farmInput.leverage ?? 1;
         const borrowedValues = calculateValues(
             parseFloat(borrowedAmount) * (borrowedPrice ?? 0),
@@ -207,8 +207,8 @@ export const borrowedState = selector<Borrowed|undefined>({
             farmInput.assetDetails[1].price,
         )
         return {
-            borrowedIndex: farmInput.borrowedIndex,
-            borrowedAssetLiteral: assets![farmInput.borrowedIndex],
+            // borrowedIndex: farmInput.borrowedIndex,
+            borrowedAssetLiteral: assets![1],
             borrowedAmount,
             leverage,
             debtRatio: (leverage - 1) / leverage,
@@ -277,15 +277,15 @@ export const borrowedAtCloseState = selector<Borrowed | undefined>({
         const estimation = get(estimationState);
         const positionAtClose = get(positionAtCloseState);
         if (!poolInfo || !borrowedAtOpen || !positionAtClose) return undefined;
-        const borrowedIndex = borrowedAtOpen.borrowedIndex;
-        const price = estimation.prices[borrowedIndex];
+        // const borrowedIndex = borrowedAtOpen.borrowedIndex;
+        const price = estimation.prices[1];
         const borrowedAmount = borrowedAtOpen.borrowedAmount ?? "0";
         const valueInBusd = parseFloat(borrowedAmount) * price
         const borrowedValues = calculateValues(valueInBusd, estimation.prices[0], estimation.prices[1]);
         const debtRatio = valueInBusd / positionAtClose.positionValues[2]
         const liquidated = debtRatio >= poolInfo.liquidationThreshold;
         return {
-            borrowedIndex,
+            // borrowedIndex,
             borrowedAssetLiteral: borrowedAtOpen.borrowedAssetLiteral,
             borrowedAmount,
             leverage: borrowedAtOpen.leverage,
@@ -312,7 +312,8 @@ export const positionAfterCloseState = selector<PositionStatusAfterClose | undef
         const price2AtClose = estimation.prices[1] ?? 0;
         const positionValuesAfterClose = calculateValues(busdValue, price1AtClose, price2AtClose);
         const borrowedAmount = parseFloat(borrowedAtClose.borrowedAmount ?? "0");
-        const borrowedIndex = borrowedAtClose.borrowedIndex;
+        // const borrowedIndex = borrowedAtClose.borrowedIndex;
+        const borrowedIndex = 1;
         const convertToBase = [];
         convertToBase[borrowedIndex] = {
             amount: (positionValuesAfterClose[borrowedIndex]).toFixed(4),

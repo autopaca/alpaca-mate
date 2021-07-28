@@ -3,7 +3,7 @@ import {PoolMeta} from "../poolMetas";
 export type FarmInput = {
     assetDetails: AssetDetail[]; // length is always 2, 0 is asset1, 1 is asset2
     leverage: number;
-    borrowedIndex: number;
+    // borrowedIndex: number;
 }
 export type PoolInfo = {
     liquidationThreshold: number;
@@ -39,7 +39,7 @@ export type Estimation = {
 }
 
 export type Borrowed = {
-    borrowedIndex: number,
+    // borrowedIndex: number,
     borrowedAssetLiteral: string;
     borrowedAmount?: string;
     leverage?: number;

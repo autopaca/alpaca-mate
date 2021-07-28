@@ -10,6 +10,7 @@ import FarmEstimation from "./FarmEstimation";
 import poolMetas, {possibleBorrowAssets} from "../../poolMetas";
 
 const FarmOpenPositionInput = () => {
+
     const assets = useRecoilValue(assetsState);
     const setPool = useSetRecoilState(poolState);
     const poolInfo = useRecoilValue(poolInfoState);
@@ -23,8 +24,11 @@ const FarmOpenPositionInput = () => {
         })
         return ary;
     }
+    const chosenValue = () => {
+        return canBeBorrowed().length === 1 ? 0 : 1;
+    }
     const setBorrowed = (b: number) => {
-        if (b != farmInput!.borrowedIndex) {
+        if (b != chosenValue()) {
             const newPoolName = `${assets![1]}-${assets![0]}`
             const newPoolIndex = poolMetas.findIndex(p => p.pool === newPoolName)
             newPoolIndex >= 0 && setPool({poolIndex: newPoolIndex, poolMeta: poolMetas[newPoolIndex]})
@@ -45,7 +49,7 @@ const FarmOpenPositionInput = () => {
                                 />
                                 <AssetToBorrow
                                     assets={canBeBorrowed()!}
-                                    borrowedIndex={farmInput!.borrowedIndex}
+                                    selectedValue={chosenValue()}
                                     setBorrowed={setBorrowed}
                                 />
                                 <Divider />

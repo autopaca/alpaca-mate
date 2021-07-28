@@ -7,7 +7,7 @@ const {Option} = Select;
 
 const AssetToBorrow = (props: {
     assets: string[],
-    borrowedIndex: number,
+    selectedValue: number,
     setBorrowed: (b: number) => void;
 }) => {
     return (
@@ -18,7 +18,7 @@ const AssetToBorrow = (props: {
                     <Select
                         className={"c-assetSelector"}
                         dropdownClassName={"FarmOpenPositionInput"}
-                        value={props.borrowedIndex}
+                        value={props.selectedValue}
                         onChange={props.setBorrowed}
                     >
                         {props.assets.map((asset, index) => (
