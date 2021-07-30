@@ -50,7 +50,6 @@ function DetailsAtClosing() {
                     <span className="block lg:inline-block mr-1">Asset Borrowed</span>
                     <span className="block lg:inline-block text-xs lg:text-lg">(Debt Value)</span></>}
                 assetsValues={borrowedAtClose?.borrowedValues}
-                defaultIndex={1}
             />
             <DetailsRow
                 left={"Debt Ratio"}

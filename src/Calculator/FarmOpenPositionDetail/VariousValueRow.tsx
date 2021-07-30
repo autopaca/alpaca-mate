@@ -10,7 +10,6 @@ const {Option} = Select;
 const VariousValueRow = (props: {
     title: React.ReactNode,
     assetsValues?: AssetValues,
-    defaultIndex?: number,
 }) => {
     const assets = useRecoilValue(assetsState);
     const coins = () => {

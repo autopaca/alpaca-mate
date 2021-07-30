@@ -16,13 +16,13 @@ export type RelativePrice = {
     price: number;
     symbol: String;
 }
-export type RelativeInfo = RelativePrice[]
+export type RelativeInfo = RelativePrice[];
 
 export type AssetValues = number[]; // length is always 3, 0 is in asset1, 1 is in asset2, 2 is in busd;
 
 export type PositionStatus = {
     positionValues: AssetValues;
-    positionDetails: AssetDetail[]
+    positionDetails: AssetDetail[];
 }
 
 export type PositionStatusAfterClose = {
@@ -34,7 +34,7 @@ export type PositionStatusAfterClose = {
 }
 
 export type Estimation = {
-    farmingDays?: number,
+    farmingDays?: number;
     prices: number[]; // length is always 2, 0 is asset1, 1 is asset2
 }
 
@@ -49,33 +49,35 @@ export type Borrowed = {
     liquidated?: boolean;
 }
 export type BaseApr = {
-    yieldFarmApr: number,
-    tradingFeeApr: number
+    yieldFarmApr: number;
+    tradingFeeApr: number;
 }
 export type ExtendedApr = {
-    alpacaApr: number,
-    interestApr: number,
+    alpacaApr: number;
+    interestApr: number;
 }
 export type FinalApr = {
-    leveragedYFApr: number,
-    leveragedTFApr: number,
-    totalApr: number,
-    dailyApr: number,
-    leveragedTotalApr: number,
-    leveragedDailyApr: number,
-    totalApy: number,
-    leveragedTotalApy: number
-}
+    leveragedYFApr: number;
+    leveragedTFApr: number;
+    totalApr: number;
+    dailyApr: number;
+    leveragedTotalApr: number;
+    leveragedDailyApr: number;
+    totalApy: number;
+    leveragedTotalApy: number;
+} & BaseApr & ExtendedApr
 export type PoolMetaState = {
-    poolMeta: PoolMeta,
-    poolIndex: number,
+    poolMeta: PoolMeta;
+    poolIndex: number;
 }
 export type GainOrLoss = {
-    value: number,
-    percent: number
+    value: number;
+    percent: number;
 }
 export type GainOrLossWithApy = {
-    farmGain?: number
+    yfGain: number;
+    alpacaRewards: number;
+    interest: number;
 } & GainOrLoss
 
 export const BUSD = "BUSD";
