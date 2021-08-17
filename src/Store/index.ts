@@ -377,32 +377,36 @@ export const gainOrLossWithApyState = selector<GainOrLossWithApy|undefined>({
     key: "gainOrLossWithApy",
     get: ({get}) => {
         const gainOrLoss = get(gainOrLossState);
-        const assetValues = get(assetsValueState);
+        const initAssetValue = get(assetsValueState);
         const positionAtOpen = get(positionAtOpenState);
         const positionAtClose = get(positionAtCloseState);
         const estimation = get(estimationState);
-        if (!gainOrLoss || !assetValues || !positionAtOpen || !positionAtClose || !estimation.farmingDays) return undefined;
+        if (!gainOrLoss || !initAssetValue || !positionAtOpen || !positionAtClose || !estimation.farmingDays) return undefined;
         const farmInput = get(farmInputState)!;
-        const assetsValueAtOpen = get(assetsValueState)!;
         const finalApr = get(finalAprState)!;
-        let {value: initGainOrLoss} = gainOrLoss
+        const positionAfterClose = get(positionAfterCloseState)!;
+        let {value: initGainOrLoss} = gainOrLoss;
+        const averagePositionValue = (initAssetValue[2] + positionAfterClose.positionValues[2]) / 2;
+        console.log("init: ", initAssetValue[2]);
+        console.log("after close: ", positionAfterClose.positionValues[2]);
+        console.log("average: ", averagePositionValue);
         // const averageValue = (positionAtOpen.positionValues[2] + positionAtClose.positionValues[2]) / 2;
         // const farmGain = (Math.pow(finalApr.dailyApr / 100 + 1, estimation.farmingDays) - 1) * averageValue;
         // value += farmGain
         // const percent = value / assetsValueAtOpen[2]
 
-        const alpacaRewards = assetValues[2] * (finalApr.alpacaApr / 100) * estimation.farmingDays / 365;
+        const alpacaRewards = averagePositionValue * (finalApr.alpacaApr / 100) * estimation.farmingDays / 365;
         const farmApr = finalApr.yieldFarmApr + finalApr.tradingFeeApr;
-        console.log("farm apr: ", farmApr)
 
         const changeInNonBorrowAsset = priceChangePercent(farmInput.assetDetails[0].price, estimation.prices[0])
         const changeInBorrowAsset = priceChangePercent(farmInput.assetDetails[1].price, estimation.prices[1])
         const lpAssetValuePercent = Math.sqrt(changeInNonBorrowAsset * changeInBorrowAsset)
-        const totalFarmEarning = (assetValues[2] * farmInput.leverage) * (1 + lpAssetValuePercent) / 2 * (Math.exp(farmApr / 100 * estimation.farmingDays / 365) - 1) + alpacaRewards;
-        const interest = assetValues[2] * (farmInput.leverage - 1) * (1 + changeInBorrowAsset) / 2 * (Math.exp(finalApr.interestApr / 100 * estimation.farmingDays / 365) - 1);
+        const lyfGain = (initAssetValue[2] * farmInput.leverage) * (1 + lpAssetValuePercent) / 2 * (Math.exp(farmApr / 100 * estimation.farmingDays / 365) - 1);
+        const totalFarmEarning = lyfGain + alpacaRewards;
+        const interest = initAssetValue[2] * (1 + changeInBorrowAsset) / 2 * (Math.exp(finalApr.interestApr / 100 * estimation.farmingDays / 365) - 1);
         const yfGain = totalFarmEarning - interest;
         const value = yfGain + initGainOrLoss;
-        const percent = value / assetsValueAtOpen[2];
+        const percent = value / initAssetValue[2];
 
         // const positionValue = (assetValues[2] * farmInput.leverage) * (1 + lpAssetValuePercent) / 2 * Math.exp(farmApr / 100 * estimation.farmingDays / 365) + alpacaRewards;
 
