@@ -57,7 +57,7 @@ button {
 
 .NavigationBar {
   color: #31c77f;
-  line-height: 48px;
+  /*line-height: 48px;*/
 }
 .NavigationBar .c-appName--desktop {
   font-size: 2rem;
