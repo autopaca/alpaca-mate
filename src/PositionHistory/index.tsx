@@ -8,7 +8,7 @@ const { utils } = ethers;
 
 function PositionHistory() {
   const variables = {
-    owner: '0x3bc99eb0aef67eb17949d8512ae479fb35450135',
+    owner: '0xf0256b9115c6d96e063962f9b0e9cf7d1285223e',
   };
   const { status, data, error, isFetching } = useGetPositionsByOwnerQuery(gqlClient, variables, {
     staleTime: Infinity,

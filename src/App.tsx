@@ -61,6 +61,10 @@ function App() {
             This project is still in early stage, it's highly possible that there are bugs inside. If you find any bugs
             or have any questions, please contact me via telegram @joe_999.
           </p>
+          <p>
+            Please donate to support this project if you think it is helpful. BSC or Ethereum wallet:
+            0xaf636d5234802333aFdc7DBC6E48147c4432f8aD
+          </p>
         </Footer>
       </Layout>
     </div>
