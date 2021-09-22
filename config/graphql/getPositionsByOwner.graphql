@@ -1,0 +1,20 @@
+query getPositionsByOwner($owner: String) {
+  positionEntities(where: {owner: $owner, share_gt: 0}, first: 1) {
+    id
+    share
+    worker {
+      id
+      name
+      reinvests {
+        totalShare
+        totalBalance
+        timestamp
+      }
+    }
+    shareOperations {
+      opType
+      share
+      timestamp
+    }
+  }
+}

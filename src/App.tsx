@@ -1,19 +1,25 @@
 import React from 'react';
 import './App.css';
 import Calculator from './Calculator';
-import { Col, Image, Layout, Row } from 'antd';
+import { Col, Layout, Row } from 'antd';
 import { useQuery } from 'react-query';
-import { getCoinUrl } from './Calculator/utils';
+import { Route, Switch } from 'react-router-dom';
+import PositionHistory from './PositionHistory';
+import dayjs from 'dayjs';
+import duration from 'dayjs/plugin/duration';
 
 const { Header, Footer, Content } = Layout;
+dayjs.extend(duration);
 
 function App() {
-  const { isLoading, error, data } = useQuery<{ current_price: number; image: string }[]>('alpacaPriceData', () =>
-    fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=alpaca-finance&per_page=250').then(
-      (res) => res.json(),
-    ),
+  const { isLoading, error, data } = useQuery<{ current_price: number; image: string }[]>(
+    'alpacaPriceData',
+    () =>
+      fetch('https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=alpaca-finance&per_page=250').then(
+        (res) => res.json(),
+      ),
+    { staleTime: dayjs.duration({ minutes: 1 }).asMilliseconds() },
   );
-  console.log({ data });
   return (
     <div className="App transition-filter duration-300">
       <Layout style={{ background: 'transparent' }}>
@@ -36,7 +42,14 @@ function App() {
         <Layout style={{ background: 'transparent' }}>
           {/*<Sider style={{background: "transparent"}} className={""}/>*/}
           <Content className={'w-full lg:m-auto max-w-screen-lg min-w-screen-lg'}>
-            <Calculator />
+            <Switch>
+              <Route path="/test">
+                <PositionHistory />
+              </Route>
+              <Route path="/">
+                <Calculator />
+              </Route>
+            </Switch>
           </Content>
         </Layout>
         <Footer style={{ background: 'transparent' }}>
@@ -47,6 +60,10 @@ function App() {
           <p>
             This project is still in early stage, it's highly possible that there are bugs inside. If you find any bugs
             or have any questions, please contact me via telegram @joe_999.
+          </p>
+          <p>
+            Please donate to support this project if you think it is helpful. BSC or Ethereum wallet:
+            0xaf636d5234802333aFdc7DBC6E48147c4432f8aD
           </p>
         </Footer>
       </Layout>
