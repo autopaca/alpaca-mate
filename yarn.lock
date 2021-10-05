@@ -2114,11 +2114,6 @@ chardet@^0.7.0:
   resolved "https://registry.nlark.com/chardet/download/chardet-0.7.0.tgz#90094849f0937f2eedc2425d0d28a9e5f0cbad9e"
   integrity sha1-kAlISfCTfy7twkJdDSip5fDLrZ4=
 
-chart.js@^3.5.1:
-  version "3.5.1"
-  resolved "https://registry.nlark.com/chart.js/download/chart.js-3.5.1.tgz?cache=0&sync_timestamp=1629362372816&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fchart.js%2Fdownload%2Fchart.js-3.5.1.tgz#73e24d23a4134a70ccdb5e79a917f156b6f3644a"
-  integrity sha1-c+JNI6QTSnDM2155qRfxVrbzZEo=
-
 chokidar@^3.5.2:
   version "3.5.2"
   resolved "https://registry.yarnpkg.com/chokidar/-/chokidar-3.5.2.tgz#dba3976fcadb016f66fd365021d91600d01c1e75"
@@ -4494,13 +4489,6 @@ rc@^1.2.8:
     ini "~1.3.0"
     minimist "^1.2.0"
     strip-json-comments "~2.0.1"
-
-react-chartjs-2@^3.0.4:
-  version "3.0.4"
-  resolved "https://registry.nlark.com/react-chartjs-2/download/react-chartjs-2-3.0.4.tgz#88e14c6b4d577941c736f0657b071c8273916652"
-  integrity sha1-iOFMa01XeUHHNvBlewccgnORZlI=
-  dependencies:
-    lodash "^4.17.19"
 
 react-dom@^17.0.0:
   version "17.0.2"

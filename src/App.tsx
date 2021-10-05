@@ -4,7 +4,6 @@ import Calculator from './Calculator';
 import { Col, Layout, Row } from 'antd';
 import { useQuery } from 'react-query';
 import { Route, Switch } from 'react-router-dom';
-import PositionHistory from './PositionHistory';
 import dayjs from 'dayjs';
 import duration from 'dayjs/plugin/duration';
 
@@ -43,9 +42,9 @@ function App() {
           {/*<Sider style={{background: "transparent"}} className={""}/>*/}
           <Content className={'w-full lg:m-auto max-w-screen-lg min-w-screen-lg'}>
             <Switch>
-              <Route path="/test">
-                <PositionHistory />
-              </Route>
+              {/*<Route path="/test">*/}
+              {/*  <PositionHistory />*/}
+              {/*</Route>*/}
               <Route path="/">
                 <Calculator />
               </Route>
