@@ -1,26 +1,26 @@
 import React from 'react';
-import DetailsTitle from './DetailsTitle';
-import DetailsRow from './DetailsRow';
-import VariousValueRow from './VariousValueRow';
 import { useRecoilValue } from 'recoil';
 import {
-  assetsState,
-  assetsValueState,
-  borrowedState,
-  farmInputState,
-  relativeInfoAtOpenState,
-  positionAtOpenState,
-} from '../../Store';
-import RelativePriceRow from './RelativePriceRow';
-import { renderAssets } from '../utils';
+  cakeMaxiAssetsState,
+  cakeMaxiAssetsValueState,
+  cakeMaxiBorrowedState,
+  cakeMaxiFarmInputState,
+  cakeMaxiPositionAtOpenState,
+  cakeMaxiRelativeInfoAtOpenState,
+} from 'Src/Store';
+import { renderAssets } from 'Calculator/utils';
+import DetailsTitle from 'Src/Calculator/FarmOpenPositionDetail/DetailsTitle';
+import DetailsRow from 'Calculator/FarmOpenPositionDetail/DetailsRow';
+import VariousValueRow from 'Calculator/FarmOpenPositionDetail/VariousValueRow';
+import RelativePriceRow from 'Calculator/FarmOpenPositionDetail/RelativePriceRow';
 
-function DetailsAtOpening() {
-  const farmInput = useRecoilValue(farmInputState);
-  const assets = useRecoilValue(assetsState);
-  const borrowed = useRecoilValue(borrowedState);
-  const totalFarmAtOpen = useRecoilValue(positionAtOpenState);
-  const assetsValues = useRecoilValue(assetsValueState);
-  const relativeAtOpen = useRecoilValue(relativeInfoAtOpenState)!;
+function CakeMaxiDetailsAtOpening() {
+  const farmInput = useRecoilValue(cakeMaxiFarmInputState);
+  const assets = useRecoilValue(cakeMaxiAssetsState);
+  const assetsValues = useRecoilValue(cakeMaxiAssetsValueState);
+  const borrowed = useRecoilValue(cakeMaxiBorrowedState);
+  const relativeAtOpen = useRecoilValue(cakeMaxiRelativeInfoAtOpenState)!;
+  const totalFarmAtOpen = useRecoilValue(cakeMaxiPositionAtOpenState);
   return (
     <>
       <DetailsTitle content={'At Opening'} />
@@ -60,4 +60,4 @@ function DetailsAtOpening() {
   );
 }
 
-export default DetailsAtOpening;
+export default CakeMaxiDetailsAtOpening;

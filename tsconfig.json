@@ -13,7 +13,13 @@
     "resolveJsonModule": true,
     "isolatedModules": true,
     "noEmit": true,
-    "jsx": "react"
+    "jsx": "react",
+    "baseUrl": "./",
+    "paths": {
+      "Src/*": ["./src/*"],
+      "Store/*": ["./src/Store/*"],
+      "Calculator/*": ["./src/Calculator/*"]
+    }
   },
   "include": ["./src"]
 }
