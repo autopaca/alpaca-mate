@@ -7,6 +7,7 @@ import { RecoilRoot } from 'recoil';
 import App from './App';
 import { ReactQueryDevtools } from 'react-query/devtools';
 import { HashRouter as Router } from 'react-router-dom';
+import 'virtual:windi.css';
 
 const queryClient = new QueryClient();
 
