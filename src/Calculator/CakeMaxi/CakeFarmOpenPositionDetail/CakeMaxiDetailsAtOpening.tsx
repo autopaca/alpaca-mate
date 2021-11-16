@@ -8,7 +8,7 @@ import {
   cakeMaxiPositionAtOpenState,
   cakeMaxiRelativeInfoAtOpenState,
 } from 'Src/Store';
-import { renderAssets } from 'Calculator/utils';
+import { renderAssets, renderSingleAsset } from 'Calculator/utils';
 import DetailsTitle from 'Src/Calculator/FarmOpenPositionDetail/DetailsTitle';
 import DetailsRow from 'Calculator/FarmOpenPositionDetail/DetailsRow';
 import VariousValueRow from 'Calculator/FarmOpenPositionDetail/VariousValueRow';
@@ -53,7 +53,7 @@ function CakeMaxiDetailsAtOpening() {
             <span className="block lg:inline-block">Position Value</span>
           </>
         }
-        right={renderAssets(assets!, totalFarmAtOpen?.positionDetails)}
+        right={renderSingleAsset(assets![1], totalFarmAtOpen?.positionDetails[1])}
       />
       <VariousValueRow title={'Position Value'} assetsValues={totalFarmAtOpen?.positionValues} assets={assets} />
     </>

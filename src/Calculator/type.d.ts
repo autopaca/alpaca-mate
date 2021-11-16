@@ -94,4 +94,5 @@ export type CakeMaxiPoolInfo = {
   borrowableAssets: string[];
   borrowIndex: number;
   leverage: number;
+  liquidationThreshold: number;
 };

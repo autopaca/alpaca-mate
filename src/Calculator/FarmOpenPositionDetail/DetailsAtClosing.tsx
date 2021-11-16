@@ -24,6 +24,7 @@ import { ratioToPercent, renderAssets } from '../utils';
 
 function DetailsAtClosing() {
   const assets = useRecoilValue(assetsState);
+  const borrowed = useRecoilValue(borrowedState);
   const borrowedAtClose = useRecoilValue(borrowedAtCloseState);
   const poolInfo = useRecoilValue(poolInfoState);
   const relativeAtClose = useRecoilValue(relativeInfoAtCloseState)!;
@@ -67,7 +68,7 @@ function DetailsAtClosing() {
         left={'Safety Buffer'}
         right={ratioToPercent(poolInfo && borrowedAtClose && poolInfo.liquidationThreshold - borrowedAtClose.debtRatio)}
       />
-      <ReturnValueRow />
+      <ReturnValueRow assets={assets} borrowed={borrowed} positionAfterClose={positionAfterClose} baseAssetIndex={1} />
       <VariousValueRow title={'Equity Value'} assetsValues={positionAfterClose?.positionValues} assets={assets} />
       <GainOrLossRow title={'Profit/Loss'} gainOrLoss={gainOrLoss} />
     </>

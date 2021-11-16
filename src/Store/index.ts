@@ -249,6 +249,17 @@ export const positionAtOpenState = selector<PositionStatus | undefined>({
     };
   },
 });
+export const cakeMaxiRelativeInfoAtCloseState = selector<RelativeInfo | undefined>({
+  key: 'cake-maxi-relativeInfoAtClose',
+  get: ({ get }) => {
+    const estimation = get(estimationState);
+    const assets = get(cakeMaxiAssetsState);
+    if (!assets) return undefined;
+    const price1 = estimation.prices[0] || 0;
+    const price2 = estimation.prices[1] || 0;
+    return calculateRelative(price1, price2, assets);
+  },
+});
 export const positionAtCloseState = selector<PositionStatus | undefined>({
   key: 'positionAtClose',
   get: ({ get }) => {
@@ -443,6 +454,7 @@ export const cakeMaxiPoolState = atom<CakeMaxiPoolInfo | undefined>({
     borrowableAssets: cakeMaxiAssets,
     borrowIndex: 0,
     leverage: 2.5,
+    liquidationThreshold: 0.8,
   }, // default value (aka initial value)
 });
 
@@ -540,14 +552,229 @@ export const cakeMaxiPositionAtOpenState = selector<PositionStatus | undefined>(
     const borrowedAmount = borrowed.borrowedAmount || '0';
     const totalInBusd = parseFloat(borrowedAmount) * borrowedPrice + assetsValue[2];
     const totalAssetValues = calculateValues(totalInBusd, price1, price2);
-    const farmAsset1 = (totalAssetValues[0] / 2).toFixed(4);
-    const farmAsset2 = (totalAssetValues[1] / 2).toFixed(4);
+    const farmAsset1 = (0).toFixed(4);
+    const farmAsset2 = totalAssetValues[1].toFixed(4);
     return {
       positionValues: totalAssetValues,
       positionDetails: [
         { amount: farmAsset1, price: price1 },
         { amount: farmAsset2, price: price2 },
       ],
+    };
+  },
+});
+
+export const cakeMaxiPositionAtCloseState = selector<PositionStatus | undefined>({
+  key: 'cake-maxi-positionAtClose',
+  get: ({ get }) => {
+    const positionAtOpen = get(cakeMaxiPositionAtOpenState);
+    if (!positionAtOpen) return undefined;
+    const estimation = get(estimationState);
+    const amount1 = positionAtOpen.positionDetails[0].amount ?? '0';
+    const amount2 = positionAtOpen.positionDetails[1].amount ?? '0';
+    // const k = parseFloat(amount1) * parseFloat(amount2);
+    const price1AtClose = estimation.prices[0] ?? 0;
+    const price2AtClose = estimation.prices[1] ?? 0;
+    // const xDivY = price1AtClose ? price2AtClose / price1AtClose : 0;
+    // const amount2AtClose = Math.sqrt(xDivY ? k / xDivY : 0);
+    // const amount1AtClose = amount2AtClose ? k / amount2AtClose : 0;
+    const totalInBusdAtClose = parseFloat(amount1) * price1AtClose + parseFloat(amount2) * price2AtClose;
+    const totalAssetValuesAtClose = calculateValues(totalInBusdAtClose, price1AtClose, price2AtClose);
+    const farmAsset1 = (0).toFixed(4);
+    const farmAsset2 = totalAssetValuesAtClose[1].toFixed(4);
+    return {
+      positionValues: totalAssetValuesAtClose,
+      positionDetails: [
+        { amount: farmAsset1, price: price1AtClose },
+        { amount: farmAsset2, price: price2AtClose },
+      ],
+    };
+  },
+});
+
+export const cakeMaxiBorrowedAtCloseState = selector<Borrowed | undefined>({
+  key: 'cake-maxi-borrowedAtClose',
+  get: ({ get }) => {
+    const poolInfo = get(cakeMaxiPoolState);
+    const borrowedAtOpen = get(cakeMaxiBorrowedState);
+    const estimation = get(estimationState);
+    const positionAtClose = get(cakeMaxiPositionAtCloseState);
+    if (!poolInfo || !borrowedAtOpen || !positionAtClose) return undefined;
+    const borrowedIndex = 0;
+    const price = estimation.prices[borrowedIndex];
+    const borrowedAmount = borrowedAtOpen.borrowedAmount ?? '0';
+    const valueInBusd = parseFloat(borrowedAmount) * price;
+    const borrowedValues = calculateValues(valueInBusd, estimation.prices[0], estimation.prices[1]);
+    const debtRatio = valueInBusd / positionAtClose.positionValues[2];
+    const liquidated = debtRatio >= poolInfo.liquidationThreshold;
+    return {
+      // borrowedIndex,
+      borrowedAssetLiteral: borrowedAtOpen.borrowedAssetLiteral,
+      borrowedAmount,
+      leverage: borrowedAtOpen.leverage,
+      debtRatio,
+      price,
+      borrowedValues,
+      liquidated,
+    };
+  },
+});
+export const cakeMaxiPositionAfterCloseState = selector<PositionStatusAfterClose | undefined>({
+  key: 'cake-maxi-positionAfterClose',
+  get: ({ get }) => {
+    const borrowedAtClose = get(cakeMaxiBorrowedAtCloseState);
+    const positionAtClose = get(cakeMaxiPositionAtCloseState)!;
+    if (!borrowedAtClose || !positionAtClose) return undefined;
+    const estimation = get(estimationState);
+    let busdValue = positionAtClose.positionValues[2] - borrowedAtClose.borrowedValues[2];
+    if (borrowedAtClose.liquidated) {
+      busdValue = busdValue * 0.95;
+    }
+    const price1AtClose = estimation.prices[0] ?? 0;
+    const price2AtClose = estimation.prices[1] ?? 0;
+    const positionValuesAfterClose = calculateValues(busdValue, price1AtClose, price2AtClose);
+    const borrowedAmount = parseFloat(borrowedAtClose.borrowedAmount ?? '0');
+    // const borrowedIndex = borrowedAtClose.borrowedIndex;
+    const borrowedIndex = 0;
+    const convertToBase = [];
+    convertToBase[borrowedIndex] = {
+      amount: positionValuesAfterClose[borrowedIndex].toFixed(4),
+      price: estimation.prices[borrowedIndex] ?? 0,
+    };
+    convertToBase[1 - borrowedIndex] = {
+      amount: '0.0',
+      price: estimation.prices[1 - borrowedIndex] ?? 0,
+    };
+    const minimizeTrading = [];
+    const priceOfBaseAsset = estimation.prices[borrowedIndex] ?? 0;
+    const priceOfOtherAsset = estimation.prices[1 - borrowedIndex] ?? 0;
+    const amountOfBaseAsset = parseFloat(positionAtClose.positionDetails[borrowedIndex].amount ?? '0');
+    const amountOfOtherAsset = parseFloat(positionAtClose.positionDetails[1 - borrowedIndex].amount ?? '0');
+    if (amountOfBaseAsset >= borrowedAmount) {
+      minimizeTrading[borrowedIndex] = {
+        amount: (amountOfBaseAsset - borrowedAmount).toFixed(4),
+        price: priceOfBaseAsset,
+      };
+      minimizeTrading[1 - borrowedIndex] = {
+        amount: amountOfOtherAsset.toFixed(4),
+        price: priceOfOtherAsset,
+      };
+    } else {
+      const amountOfOtherLeft =
+        amountOfOtherAsset - ((borrowedAmount - amountOfBaseAsset) * priceOfBaseAsset) / priceOfOtherAsset;
+      minimizeTrading[borrowedIndex] = {
+        amount: '0.0',
+        price: priceOfBaseAsset,
+      };
+      minimizeTrading[1 - borrowedIndex] = {
+        amount: amountOfOtherLeft.toFixed(4),
+        price: priceOfOtherAsset,
+      };
+    }
+    return {
+      positionValues: positionValuesAfterClose,
+      positionDetails: {
+        minimizeTrading,
+        convertToBase,
+      },
+    };
+  },
+});
+export const cakeMaxiGainOrLossState = selector<GainOrLoss | undefined>({
+  key: 'cake-maxi-gainOrLoss',
+  get: ({ get }) => {
+    const positionAfterClose = get(cakeMaxiPositionAfterCloseState);
+    const assetsValueAtOpen = get(cakeMaxiAssetsValueState);
+    if (!positionAfterClose || !assetsValueAtOpen) return undefined;
+    const value = positionAfterClose.positionValues[2] - assetsValueAtOpen[2];
+    const percent = value / assetsValueAtOpen[2];
+    return {
+      value,
+      percent,
+    };
+  },
+});
+export const cakeMaxiFinalAprState = selector<FinalApr | undefined>({
+  key: 'cake-maxi-finalApr',
+  get: ({ get }) => {
+    const farmInput = get(cakeMaxiFarmInputState);
+    if (!farmInput) return undefined;
+    const { yieldFarmApr, tradingFeeApr } = get(baseAprState);
+    const { alpacaApr, interestApr } = get(extendedAprState);
+    const leverage = farmInput.leverage;
+    // calculated apr
+    const leveragedYFApr = leverage * yieldFarmApr;
+    const leveragedTFApr = leverage * tradingFeeApr;
+    const totalApr = yieldFarmApr + tradingFeeApr;
+    const dailyApr = totalApr / 365;
+    const leveragedTotalApr = leveragedYFApr + leveragedTFApr + alpacaApr - Math.abs(interestApr);
+    const leveragedDailyApr = leveragedTotalApr / 365;
+    const totalApy = aprToApy(totalApr / 100) * 100;
+    const leveragedTotalApy = aprToApy(leveragedTotalApr / 100) * 100;
+    return {
+      leveragedYFApr,
+      leveragedTFApr,
+      totalApr,
+      dailyApr,
+      leveragedTotalApr,
+      leveragedDailyApr,
+      totalApy,
+      leveragedTotalApy,
+      alpacaApr,
+      interestApr,
+      yieldFarmApr,
+      tradingFeeApr,
+    };
+  },
+});
+export const cakeMaxiGainOrLossWithApyState = selector<GainOrLossWithApy | undefined>({
+  key: 'cake-maxi-gainOrLossWithApy',
+  get: ({ get }) => {
+    const gainOrLoss = get(cakeMaxiGainOrLossState);
+    const initAssetValue = get(cakeMaxiAssetsValueState);
+    const positionAtOpen = get(cakeMaxiPositionAtOpenState);
+    const positionAtClose = get(cakeMaxiPositionAtCloseState);
+    const estimation = get(estimationState);
+    if (!gainOrLoss || !initAssetValue || !positionAtOpen || !positionAtClose || !estimation.farmingDays)
+      return undefined;
+    const farmInput = get(cakeMaxiFarmInputState)!;
+    const finalApr = get(cakeMaxiFinalAprState)!;
+    const positionAfterClose = get(cakeMaxiPositionAfterCloseState)!;
+    let { value: initGainOrLoss } = gainOrLoss;
+    const averagePositionValue = (initAssetValue[2] + positionAfterClose.positionValues[2]) / 2;
+    console.log('init: ', initAssetValue[2]);
+    console.log('after close: ', positionAfterClose.positionValues[2]);
+    console.log('average: ', averagePositionValue);
+    // const averageValue = (positionAtOpen.positionValues[2] + positionAtClose.positionValues[2]) / 2;
+    // const farmGain = (Math.pow(finalApr.dailyApr / 100 + 1, estimation.farmingDays) - 1) * averageValue;
+    // value += farmGain
+    // const percent = value / assetsValueAtOpen[2]
+
+    const alpacaRewards = (averagePositionValue * (finalApr.alpacaApr / 100) * estimation.farmingDays) / 365;
+    const farmApr = finalApr.yieldFarmApr + finalApr.tradingFeeApr;
+
+    const changeInNonBorrowAsset = priceChangePercent(farmInput.assetDetails[0].price, estimation.prices[0]);
+    const changeInBorrowAsset = priceChangePercent(farmInput.assetDetails[1].price, estimation.prices[1]);
+    const lpAssetValuePercent = Math.sqrt(changeInNonBorrowAsset * changeInBorrowAsset);
+    const lyfGain =
+      ((initAssetValue[2] * farmInput.leverage * (1 + lpAssetValuePercent)) / 2) *
+      (Math.exp(((farmApr / 100) * estimation.farmingDays) / 365) - 1);
+    const totalFarmEarning = lyfGain + alpacaRewards;
+    const interest =
+      ((initAssetValue[2] * (1 + changeInBorrowAsset)) / 2) *
+      (Math.exp(((finalApr.interestApr / 100) * estimation.farmingDays) / 365) - 1);
+    const yfGain = totalFarmEarning - interest;
+    const value = yfGain + initGainOrLoss;
+    const percent = value / initAssetValue[2];
+
+    // const positionValue = (assetValues[2] * farmInput.leverage) * (1 + lpAssetValuePercent) / 2 * Math.exp(farmApr / 100 * estimation.farmingDays / 365) + alpacaRewards;
+
+    return {
+      yfGain,
+      value,
+      percent,
+      alpacaRewards,
+      interest,
     };
   },
 });
