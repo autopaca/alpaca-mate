@@ -8,7 +8,10 @@
     "graphql-gen": "graphql-codegen --config codegen.yml"
   },
   "dependencies": {
+    "@ant-design/charts": "^1.2.14",
     "@ant-design/icons": "^4.6.2",
+    "@antv/g2plot": "2.2.11",
+    "@antv/g6": "4.2.4",
     "@kurkle/color": "^0.1.9",
     "antd": "^4.16.6",
     "axios": "^0.21.1",

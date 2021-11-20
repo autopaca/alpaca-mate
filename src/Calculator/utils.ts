@@ -38,3 +38,22 @@ export const ratioToPercent = (ratio?: number) => {
 export const formatValue = (value?: number) => {
   return value ? value.toLocaleString('en-US', { maximumFractionDigits: 2 }) : '0.00';
 };
+
+const equityValuePercentHelper = (l: number, x: number): number => {
+  let res = 1 - ((l - 1) / l) * Math.sqrt(1 / (1 + x));
+  return Math.max(Number(res.toFixed(4)), 0);
+};
+
+export const equityValuePercent = (leverage: number, changeX: number): number => {
+  // const base = equityValuePercentHelper(leverage, 0);
+  // const newEquity = equityValuePercentHelper(leverage, changeX);
+  // console.log({ base, newEquity });
+  // return base === 0 ? 0 : newEquity / base;
+  return equityValuePercentHelper(leverage, changeX);
+};
+
+export const liquidationPriceChange = (leverage: number, liquidationThreshold: number) => {
+  const equity = 1 - liquidationThreshold;
+  const x = (leverage - 1) ** 2 / (leverage ** 2 * (1 - equity) ** 2) - 1;
+  return Number(x.toFixed(2));
+};

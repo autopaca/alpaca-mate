@@ -147,7 +147,7 @@
   {
     "pool": "ALPACA-BUSD",
     "platform": "Pancake",
-    "leverage": 2.5
+    "leverage": 3
   },
   {
     "pool": "BUSD-ALPACA",

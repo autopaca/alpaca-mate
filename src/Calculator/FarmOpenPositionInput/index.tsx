@@ -8,6 +8,7 @@ import FarmLeverage from './FarmLeverage';
 import './index.css';
 import FarmEstimation from './FarmEstimation';
 import poolMetas, { possibleBorrowAssets } from '../../poolMetas';
+import CalculatorChart from 'Calculator/CalculatorChart';
 
 const FarmOpenPositionInput = () => {
   const assets = useRecoilValue(assetsState);
@@ -47,6 +48,8 @@ const FarmOpenPositionInput = () => {
                   maxLeverage={poolInfo?.leverage ?? 1}
                 />
                 <AssetToBorrow assets={canBeBorrowed()!} selectedValue={chosenValue()} setBorrowed={setBorrowed} />
+                <Divider />
+                <CalculatorChart />
                 <Divider />
                 <FarmEstimation assets={assets} />
               </Card>

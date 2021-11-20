@@ -249,17 +249,6 @@ export const positionAtOpenState = selector<PositionStatus | undefined>({
     };
   },
 });
-export const cakeMaxiRelativeInfoAtCloseState = selector<RelativeInfo | undefined>({
-  key: 'cake-maxi-relativeInfoAtClose',
-  get: ({ get }) => {
-    const estimation = get(estimationState);
-    const assets = get(cakeMaxiAssetsState);
-    if (!assets) return undefined;
-    const price1 = estimation.prices[0] || 0;
-    const price2 = estimation.prices[1] || 0;
-    return calculateRelative(price1, price2, assets);
-  },
-});
 export const positionAtCloseState = selector<PositionStatus | undefined>({
   key: 'positionAtClose',
   get: ({ get }) => {
@@ -329,7 +318,6 @@ export const positionAfterCloseState = selector<PositionStatusAfterClose | undef
     const price2AtClose = estimation.prices[1] ?? 0;
     const positionValuesAfterClose = calculateValues(busdValue, price1AtClose, price2AtClose);
     const borrowedAmount = parseFloat(borrowedAtClose.borrowedAmount ?? '0');
-    // const borrowedIndex = borrowedAtClose.borrowedIndex;
     const borrowedIndex = 1;
     const convertToBase = [];
     convertToBase[borrowedIndex] = {
@@ -481,10 +469,12 @@ const caseMaxiFarmInputSelector = selector<FarmInput | undefined>({
     }
   },
 });
+
 export const cakeMaxiFarmInputState = atom<FarmInput | undefined>({
   key: 'cake-maxi-farmInput',
   default: caseMaxiFarmInputSelector,
 });
+
 export const cakeMaxiAssetsValueState = selector<AssetValues | undefined>({
   key: 'cake-maxi-assetsValue',
   get: ({ get }) => {
@@ -499,6 +489,7 @@ export const cakeMaxiAssetsValueState = selector<AssetValues | undefined>({
     return calculateValues(inBusd, price1, price2);
   },
 });
+
 export const cakeMaxiBorrowedState = selector<Borrowed | undefined>({
   key: 'cake-maxi-borrowed',
   get: ({ get }) => {
@@ -526,6 +517,7 @@ export const cakeMaxiBorrowedState = selector<Borrowed | undefined>({
     };
   },
 });
+
 export const cakeMaxiRelativeInfoAtOpenState = selector<RelativeInfo | undefined>({
   key: 'cake-maxi-relativeInfoAtOpen',
   get: ({ get }) => {
@@ -538,6 +530,7 @@ export const cakeMaxiRelativeInfoAtOpenState = selector<RelativeInfo | undefined
     }
   },
 });
+
 export const cakeMaxiPositionAtOpenState = selector<PositionStatus | undefined>({
   key: 'cake-maxi-positionAtOpen',
   get: ({ get }) => {
@@ -589,6 +582,18 @@ export const cakeMaxiPositionAtCloseState = selector<PositionStatus | undefined>
         { amount: farmAsset2, price: price2AtClose },
       ],
     };
+  },
+});
+
+export const cakeMaxiRelativeInfoAtCloseState = selector<RelativeInfo | undefined>({
+  key: 'cake-maxi-relativeInfoAtClose',
+  get: ({ get }) => {
+    const estimation = get(estimationState);
+    const assets = get(cakeMaxiAssetsState);
+    if (!assets) return undefined;
+    const price1 = estimation.prices[0] || 0;
+    const price2 = estimation.prices[1] || 0;
+    return calculateRelative(price1, price2, assets);
   },
 });
 
