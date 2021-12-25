@@ -3441,7 +3441,7 @@ graphql-config@^4.0.1:
     minimatch "3.0.4"
     string-env-interpolation "1.0.1"
 
-graphql-request@^3.3.0, graphql-request@^3.5.0:
+graphql-request@^3.3.0:
   version "3.5.0"
   resolved "https://registry.nlark.com/graphql-request/download/graphql-request-3.5.0.tgz#7e69574e15875fb3f660a4b4be3996ecd0bbc8b7"
   integrity sha1-fmlXThWHX7P2YKS0vjmW7NC7yLc=
@@ -3461,11 +3461,6 @@ graphql-ws@^5.4.1:
   version "5.4.1"
   resolved "https://registry.nlark.com/graphql-ws/download/graphql-ws-5.4.1.tgz#76fb4c39dfa44a961546995b6bb5320726ff5f71"
   integrity sha1-dvtMOd+kSpYVRplba7UyByb/X3E=
-
-graphql@^15.5.3:
-  version "15.5.3"
-  resolved "https://registry.nlark.com/graphql/download/graphql-15.5.3.tgz?cache=0&sync_timestamp=1630902257631&other_urls=https%3A%2F%2Fregistry.nlark.com%2Fgraphql%2Fdownload%2Fgraphql-15.5.3.tgz#c72349017d5c9f5446a897fe6908b3186db1da00"
-  integrity sha1-xyNJAX1cn1RGqJf+aQizGG2x2gA=
 
 hammerjs@^2.0.8:
   version "2.0.8"
