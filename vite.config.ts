@@ -28,5 +28,8 @@ export default defineConfig({
   server: {
     host: '0.0.0.0',
     port: 30001,
+    proxy: {
+      '/v2/positions': 'https://api.alpacafinance.org',
+    },
   },
 });
