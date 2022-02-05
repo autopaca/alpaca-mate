@@ -1,0 +1,1 @@
+export const BINANCE_CHAINID = '0x38';

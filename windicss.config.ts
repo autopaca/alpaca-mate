@@ -11,6 +11,9 @@ export default defineConfig({
           100: '#096',
         },
       },
+      minHeight: {
+        'view': '100vh',
+      }
     },
   },
   plugins: [formsPlugin],
