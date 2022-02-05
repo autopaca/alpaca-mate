@@ -4,7 +4,7 @@
     "start": "vite",
     "dev": "vite",
     "build": "tsc && vite build",
-    "serve": "vite preview",
+    "serve": "vite preview"
   },
   "dependencies": {
     "@ant-design/charts": "^1.2.14",
