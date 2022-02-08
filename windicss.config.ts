@@ -10,10 +10,16 @@ export default defineConfig({
         teal: {
           100: '#096',
         },
+        primary: "#31c77f",
+        'primary-dark': "#05966a",
+      },
+      backgroundColor: {
+        primary: "#31c77f",
       },
       minHeight: {
         'view': '100vh',
-      }
+      },
+      
     },
   },
   plugins: [formsPlugin],

@@ -7,14 +7,14 @@ const WalletTest = () => {
   const info = useRecoilValue(connectState);
 
   return (
-    <Card className='rounded-3xl'>
+    <Card className='font-bold rounded-3xl min-h-[840px] text-2xl'>
       <Row>
-        <Col span={12}>Account:</Col>
-        <Col span={12}>{info.account ?? '-'}</Col>
-        <Col span={12}>Active:</Col>
-        <Col span={12}>{info.active.toString()}</Col>
-        <Col span={12}>ChainId:</Col>
-        <Col span={12}>{info.chainId}</Col>
+        <Col span={8}>Account:</Col>
+        <Col span={16}>{info.account ?? '-'}</Col>
+        <Col span={8}>Active:</Col>
+        <Col span={16}>{info.active.toString()}</Col>
+        <Col span={8}>ChainId:</Col>
+        <Col span={16}>{info.chainId}</Col>
       </Row>
     </Card>
   );
