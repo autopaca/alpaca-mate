@@ -17,7 +17,7 @@ function Calculator() {
   return (
     <div className={'Calculator'}>
       <Spin spinning={false}>
-        <Card className={'rounded-3xl'} bodyStyle={{ minHeight: '840px' }}>
+        <Card className={'rounded-3xl min-h-[840px]'} >
           <ChooseFarmPosition />
           {poolType === PoolType.Single ? (
             <>
