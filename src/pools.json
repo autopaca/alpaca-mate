@@ -27,37 +27,37 @@
   {
     "pool": "BTCB-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ETH-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "DOT-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "UNI-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "LINK-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "XVS-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ADA-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ODDZ-wBNB",
@@ -72,37 +72,37 @@
   {
     "pool": "BUSD-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "TRX-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BTT-wBNB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BNB-BUSD",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BTCB-BUSD",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "CAKE-BUSD",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-BUSD",
@@ -147,7 +147,7 @@
   {
     "pool": "ALPACA-BUSD",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BUSD-ALPACA",
@@ -162,12 +162,12 @@
   {
     "pool": "COMP-ETH",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "SUSHI-ETH",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BUSD-USDT",
@@ -177,7 +177,7 @@
   {
     "pool": "BNB-USDT",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "CAKE-USDT",
@@ -192,12 +192,12 @@
   {
     "pool": "BUSD-BTCB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BNB-BTCB",
     "platform": "Pancake",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-ALPACA",
@@ -232,22 +232,22 @@
   {
     "pool": "BUSD-BNB",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BNB-BUSD",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ETH-BUSD",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BTCB-BUSD",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-BUSD",
@@ -262,12 +262,12 @@
   {
     "pool": "BTCB-USDT",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ETH-USDT",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ALPACA-USDT",
@@ -287,7 +287,7 @@
   {
     "pool": "BTCB-ETH",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "BETH-ETH",
@@ -297,17 +297,17 @@
   {
     "pool": "BUSD-ETH",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-ETH",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "ETH-BTCB",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   },
   {
     "pool": "USDT-BTCB",
@@ -317,6 +317,6 @@
   {
     "pool": "BUSD-BTCB",
     "platform": "WaultSwap",
-    "leverage": 3
+    "leverage": 4.5
   }
 ]
